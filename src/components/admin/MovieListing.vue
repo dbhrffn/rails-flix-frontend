@@ -22,10 +22,10 @@
                                         Status</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        First air date</th>
+                                        First aired date</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Last  air date
+                                        Last aired date
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -34,11 +34,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr  v-for="movie in movies" :key="movie.id">
+                                <tr v-for="movie in movies" :key="movie.id">
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div>
-                                                <img  :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+                                                <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
                                                     class="avatar avatar-sm me-3 border-radius-lg" :alt="movie.id">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
@@ -60,7 +60,8 @@
                                         <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">{{ $filters.voteAveragePercentage(movie.vote_average)}}</span>
+                                        <span class="text-secondary text-xs font-weight-bold">{{
+                                            $filters.voteAveragePercentage(movie.vote_average)}}</span>
                                     </td>
                                     <td class="align-middle">
                                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
@@ -76,29 +77,71 @@
                 </div>
             </div>
         </div>
+        <div v-if="totalPages > 1" class="pagination">
+            <nav class="paginate-center">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <button class="page-link" @click="fetchMovies(currentPage - 1)" :disabled="currentPage === 1"
+                            aria-label="Previous">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            <span class="sr-only">Previous</span>
+                        </button>
+                    </li>
+                    <span class="pagination-desc">Page {{ currentPage }} of {{ totalPages }}</span>
+                    <li class="page-item">
+                        <button class="page-link" @click="fetchMovies(currentPage + 1)"
+                            :disabled="currentPage === totalPages" aria-label="Next">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            <span class="sr-only">Next</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
+import api from '../../services/api';
 
 export default {
     data() {
-    return {
-
+        return {
+            movies: [],
+            currentPage: 1,
+            totalPages: 1,
+            totalCount: 0
+        }
+    },
+    computed: {
+        ...mapState({
+            // Unused
+            // movies: state => state.movies.data,
+            // meta: state => state.movies.meta
+        })
+    },
+    methods: {
+        async fetchMovies(page) {
+            try {
+                const response = await api.get(`/movies`, {
+                    params: { page }
+                });
+                this.movies = response.data.data;
+                this.currentPage = response.data.meta.current_page;
+                this.totalPages = response.data.meta.total_pages;
+                this.totalCount = response.data.meta.total_count;
+            } catch (error) {
+                console.error('Error fetching movies:', error);
+            }
+        },
+    },
+    created() {
+        // Reference if want to re-use in the future
+        // this.$store.dispatch('fetchMovies');
+        this.fetchMovies(this.currentPage)
     }
-  },
-  computed: {
-    ...mapState({
-      movies: state => state.movies.data,
-      meta: state => state.movies.meta
-    })
-  },
-  created() {
-    this.$store.dispatch('fetchMovies');
-  }
 }
 </script>
 
-<style>
-</style>
+<style></style>

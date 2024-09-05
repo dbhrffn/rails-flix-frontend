@@ -29,14 +29,20 @@
           </div>
           <div>
             <form @submit.prevent="handleLogin">
-              <div class="input-group input-group-outline my-4">
-                <label for="email" class="form-label">Email</label>
-                <input v-model="email" id="email" type="email" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" required>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">Email</span>
+                </div>
+                <input v-model="email" type="email" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
               </div>
-              <div class="input-group input-group-outline my-3">
-                <label for="password" class="form-label">Password</label>
-                <input v-model="password" id="password" type="password" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" required>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">Password</span>
+                </div>
+                <input v-model="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
               </div>
+
               <div class="text-center px-sm-6 ">
                 <button type="submit" class="btn bg-gradient-primary btn-lg btn-rounded w-100 mt-4 mb-0">Login</button>
               </div>

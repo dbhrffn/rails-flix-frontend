@@ -3,13 +3,15 @@ import api from '../services/api';
 
 export default createStore({
   state: {
-    token: null,
-    isLoggedIn: false,
+    token: localStorage.getItem('authToken') || null,
+    isLoggedIn: !!localStorage.getItem('authToken'),
     trending_movies: [],
     trending_tv_shows: [],
     posters: [],
     movies: [],
     tv_shows: [],
+    genres: [],
+    people: [],
   },
   mutations: {
     setToken(state, token) {
@@ -36,6 +38,12 @@ export default createStore({
     setTvShows(state, tv_shows) {
       state.tv_shows = tv_shows;
     },
+    setGenres(state, genres) {
+      state.genres = genres;
+    },
+    setPeople(state, people) {
+      state.people = people;
+    },
   },
   actions: {
     async login({ commit }, { email, password }) {
@@ -48,12 +56,14 @@ export default createStore({
           if(response.data.token){
             commit('setToken', response.data.token);
             commit('setIsLoggedIn', true);
+            // Store the token in localStorage
+            localStorage.setItem('authToken', response.data.token);
           }
         } catch (error) {
           console.error('Error fetching trending tv shows:', error);
         }
     },
-    logout({ commit }) {
+    async logout({ commit }) {
       commit('clearToken');
       commit('setIsLoggedIn', false);
     },
@@ -78,13 +88,12 @@ export default createStore({
         const response = await api.get('/posters');
         commit('setPosters', response.data);
       } catch (error) {
-        console.error('Error fetching movies:', error);
+        console.error('Error fetching posters:', error);
       }
     },
     async fetchMovies({ commit }) {
       try {
         const response = await api.get('/movies');
-        console.log("🚀 ~ fetchMovies ~ response.data:", response.data);
         commit('setMovies', response.data); // Adjust based on response structure
       } catch (error) {
         console.error('Error fetching movies:', error);
@@ -95,7 +104,23 @@ export default createStore({
         const response = await api.get('/tv_shows'); // Use the `api` instance
         commit('setTvShows', response.data);
       } catch (error) {
-        console.error('Error fetching movies:', error);
+        console.error('Error fetching tv_shows:', error);
+      }
+    },
+    async fetchGenres({ commit }) {
+      try {
+        const response = await api.get('/genres'); // Use the `api` instance
+        commit('setGenres', response.data);
+      } catch (error) {
+        console.error('Error fetching genres:', error);
+      }
+    },
+    async fetchPeople({ commit }) {
+      try {
+        const response = await api.get('/people'); // Use the `api` instance
+        commit('setPeople', response.data);
+      } catch (error) {
+        console.error('Error fetching people:', error);
       }
     },
   },
@@ -103,5 +128,8 @@ export default createStore({
     isLoggedIn: state => state.isLoggedIn,
     token: state => state.token,
     movies: state => state.movies,
+    tv_shows: state => state.tv_shows,
+    genres: state => state.genres,
+    people: state => state.people,
   },
 });

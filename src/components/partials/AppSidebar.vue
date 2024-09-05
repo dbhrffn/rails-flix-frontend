@@ -20,6 +20,11 @@
                     </li>
                 </ul>
             </div>
+            <div class="sidenav-footer position-absolute w-100 bottom-0 ">
+                <div class="mx-3">
+                <a class="btn bg-gradient-primary w-100" @click="logout" type="button">Log Out</a>
+                </div>
+            </div>
         </aside>
     </div>
 </template>
@@ -38,10 +43,15 @@ export default {
         ...mapGetters([])
     },
     methods: {
-        ...mapActions([]),
+        ...mapActions(['logout']),
         isActive(path) {
             return this.$route.path === path;
-        }
+        },
+        logout() {
+            this.$store.dispatch('logout');
+            // Redirect to the main page
+            this.$router.push('/');
+        },
     }
 };
 </script>
