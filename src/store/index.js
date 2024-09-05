@@ -4,7 +4,7 @@ import api from '../services/api';
 export default createStore({
   state: {
     token: null,
-    isLoggedIn: true,
+    isLoggedIn: false,
     trending_movies: [],
     trending_tv_shows: [],
     posters: [],
