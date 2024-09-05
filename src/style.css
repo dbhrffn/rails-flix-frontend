@@ -1,0 +1,181 @@
+body,
+html {
+    font-family: var(--font-family);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+h1, h2, h3, h4, h5, h6, h7 {
+    color:#e91e63;
+}
+
+.background {
+    /* Replace with actual background image path */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    height: 90vh;
+    width: 100%;
+}
+
+.overlay {
+    height: 80%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    width: 120px;
+}
+
+.content {
+    text-align: center;
+    max-width: 600px;
+    margin: auto;
+}
+
+.content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.content p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+/* Assuming your sidebar has a width of 250px */
+.sidebar {
+    width: 250px;
+    position: fixed;
+    color: white;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
+.paginate-center {
+    margin: auto;
+    
+}
+
+.pagination-desc{
+    margin-top:4px;
+    margin-left: 50px;
+    margin-right: 50px;
+    font-weight: bold;
+    color: #e91e63;
+}
+
+.rating {
+    top: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+}
+
+.main-title {
+    margin-top:20px;
+    margin-left:100px;
+}
+
+.media-banner {
+    position: relative;
+}
+.media-banner .backdrop {
+    z-index: -1;
+    overflow: hidden;
+}
+
+.media-banner .backdrop:after {
+    content: "";
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.75));
+}
+
+.media-banner .backdrop, .media-banner .backdrop:after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.media-info {
+    color: #fff;
+    padding: 2rem 0;
+}
+
+.media-info .media-rating {
+    float: right;
+}
+
+.media-rating {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    font-size: 1rem;
+    text-align: center;
+    line-height: 3rem;
+    background: #e50914;
+    color: #fff;
+    border-radius: 50%;
+}
+.page-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.poster {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, .5) 0 0 20px;
+    float: right;
+}
+
+.cast-image, .cast-image img {
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.cast-image img {
+    object-fit: cover;
+  }
+  .media-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .cast-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .video-item {
+    display: flex;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+
+.text-muted {
+    font-size: 16px;
+    color: #6c757d !important;
+}
+
+.embed-responsive-item {
+    width: 300px;
+    height: 200px;
+}
