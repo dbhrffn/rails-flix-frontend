@@ -65,6 +65,7 @@ export default createStore({
     },
     async logout({ commit }) {
       commit('clearToken');
+      localStorage.removeItem('authToken');
       commit('setIsLoggedIn', false);
     },
     async getTrendingMovies({ commit }) {
