@@ -8,6 +8,7 @@ import TvShowDetail from '../components/views/TvShowDetail.vue';
 import TvShowListing from '../components/admin/TvShowListing.vue';
 import GenreListing from '../components/admin/GenreListing.vue';
 import PeopleListing from '../components/admin/PeopleListing.vue';
+import GenreModal from '../components/modal/GenreModal.vue';
 
 const routes = [
   { path: '/', component: Main },
@@ -19,6 +20,7 @@ const routes = [
   { path: '/tv_show/listing', name: 'TvShowListing', component: TvShowListing, props: true },
   { path: '/genre/listing', name: 'GenreListing', component: GenreListing, props: true },
   { path: '/people/listing', name: 'PeopleListing', component: PeopleListing, props: true },
+  { path: '/genre/:id/edit', component: GenreModal }
 ];
 
 const router = createRouter({

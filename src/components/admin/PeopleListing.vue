@@ -36,7 +36,7 @@
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="mb-0 text-sm">{{ person.name }}</h6>
-                                                <p class="text-xs text-secondary mb-0">john@creative-tim.com</p>
+                                                <!-- <p class="text-xs text-secondary mb-0">john@creative-tim.com</p> -->
                                             </div>
                                         </div>
                                     </td>

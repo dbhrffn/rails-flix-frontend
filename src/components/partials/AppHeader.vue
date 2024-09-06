@@ -91,7 +91,7 @@ export default {
     handleLogin() {
       this.login({ email: this.email, password: this.password })
         .then(() => {
-          this.$router.push("/movie/listing");
+          this.$router.push("/");
           this.showDialog = false; // Hide modal by setting state
           this.$nextTick(() => {
             const modalElement = document.getElementById('loginModal');
@@ -102,7 +102,7 @@ export default {
               }
             }
             // Manually remove the backdrop if it persists
-            const backdropElement = document.querySelector('.modal-backdrop');
+            const backdropElement = document.querySelector('.modal-backdrop') ?? null;
             if (backdropElement) {
               backdropElement.classList.remove('show'); // Hide backdrop
               backdropElement.parentNode.removeChild(backdropElement); // Remove backdrop element

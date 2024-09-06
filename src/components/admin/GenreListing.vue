@@ -24,9 +24,9 @@
                                         <span class="text-secondary text-xs font-weight-bold">{{ genre.name }}</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
+                                        <a href="#" @click="openModal(genre.id)" class="text-secondary font-weight-bold text-xs"
                                             data-toggle="tooltip" data-original-title="Edit user">
-                                            Edit
+                                            <i class="fas fa-edit"></i> Edit
                                         </a>
                                     </td>
 
@@ -58,18 +58,31 @@
                 </ul>
             </nav>
         </div>
+        <!-- Modal Component -->
+        <GenreModal
+            v-if="selectedGenreId !== null"
+            :genreId="selectedGenreId"
+            @close="selectedGenreId = null"
+            @update="fetchGenres"
+        />
     </div>
+
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import api from '../../services/api';
+import GenreModal from '../../components/modal/GenreModal.vue'; // Adjust the path as needed
 
 
 export default {
+    components: {
+        GenreModal // Register the component here
+    },
     data() {
     return {
         genres: [],
+        selectedGenreId: null,
         currentPage: 1,
         totalPages: 1,
         totalCount: 0
@@ -89,6 +102,14 @@ export default {
                 console.error('Error fetching movies:', error);
             }
         },
+        openModal(id){
+            this.selectedGenreId = id
+            this.$nextTick(() => {
+                const modalElement = document.getElementById('editGenreModal');
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+            });
+        }
     },
   computed: {
     ...mapState({
@@ -103,4 +124,7 @@ export default {
 </script>
 
 <style>
+body.modal-open {
+    overflow: none;
+}
 </style>
