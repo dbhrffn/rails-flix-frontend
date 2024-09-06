@@ -72,7 +72,8 @@ export default {
     return {
       email: '',
       password: '',
-      showDialog: false
+      showDialog: false,
+      error : ''
     }
   },
   computed: {
@@ -80,7 +81,7 @@ export default {
     ...mapGetters([])
   },
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(['login', 'token']),
     showModal(){
       this.showDialog = true;
     },

@@ -6,6 +6,9 @@
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">TV Shows Listing</h6>
                     </div>
+                    <div class="px-0 pb-2">
+                        <input v-model="query" @input="search" class="form-control" placeholder="Search">
+                    </div>
                 </div>
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
@@ -107,6 +110,7 @@ import api from '../../services/api';
 export default {
     data() {
     return {
+        query: '',
         tv_shows: [],
         currentPage: 1,
         totalPages: 1,
@@ -114,6 +118,20 @@ export default {
     }
   },
   methods: {
+        async search() {
+            if (this.query.length < 2) {
+                this.tv_shows = this.fetchTvShows(this.currentPage);
+                return;
+            }
+            try {
+                const response = await api.get('/tv_shows_search', {
+                    params: { query: this.query }
+                });
+                this.tv_shows = response.data;
+            } catch (error) {
+                console.error('Error fetching search results:', error);
+            }
+        },
         async fetchTvShows(page) {
             try {
                 const response = await api.get(`/tv_shows`, {

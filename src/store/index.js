@@ -60,7 +60,7 @@ export default createStore({
             localStorage.setItem('authToken', response.data.token);
           }
         } catch (error) {
-          console.error('Error fetching trending tv shows:', error);
+          console.error('Error login:', error);
         }
     },
     async logout({ commit }) {

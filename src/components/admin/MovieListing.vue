@@ -6,6 +6,9 @@
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Movies Listing</h6>
                     </div>
+                    <div class="px-0 pb-2">
+                        <input v-model="query" @input="search" class="form-control" placeholder="Search">
+                    </div>
                 </div>
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
@@ -108,6 +111,7 @@ import api from '../../services/api';
 export default {
     data() {
         return {
+            query: '',
             movies: [],
             currentPage: 1,
             totalPages: 1,
@@ -122,6 +126,20 @@ export default {
         })
     },
     methods: {
+        async search() {
+            if (this.query.length < 2) {
+                this.movies = this.fetchMovies(this.currentPage);
+                return;
+            }
+            try {
+                const response = await api.get('/search', {
+                    params: { query: this.query }
+                });
+                this.movies = response.data;
+            } catch (error) {
+                console.error('Error fetching search results:', error);
+            }
+        },
         async fetchMovies(page) {
             try {
                 const response = await api.get(`/movies`, {
